@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction == Vector3.zero) return;
         
-        transform.Translate(_status.MoveSpeed * Time.deltaTime * direction);
+        // 노멀라이즈 추가로 대각이동 시 속도가 빨라지는 현상 수정
+        transform.Translate(_status.MoveSpeed * Time.deltaTime * direction.normalized);
     }
 }
