@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : PooledBehaviour
@@ -11,7 +9,7 @@ public class BulletController : PooledBehaviour
 
     private Rigidbody _rigidbody;
     private WaitForSeconds _wait;
-    
+
     private void Awake()
     {
         Init();
@@ -19,6 +17,7 @@ public class BulletController : PooledBehaviour
 
     private void OnEnable()
     {
+        _rigidbody.velocity = Vector3.zero;
         StartCoroutine(DeactivateRoutine());
     }
 
@@ -26,6 +25,7 @@ public class BulletController : PooledBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log($"플레이어 충돌확인");
             other
                 .GetComponent<PlayerController>()
                 .TakeHit(_damageValue);
@@ -37,9 +37,10 @@ public class BulletController : PooledBehaviour
         _wait = new WaitForSeconds(_deactivateTime);
         _rigidbody = GetComponent<Rigidbody>();
     }
-    
+
     private void Fire()
     {
+        // 가속 붙음
         _rigidbody.AddForce(transform.forward * _force, ForceMode.Impulse);
     }
 
@@ -58,7 +59,7 @@ public class BulletController : PooledBehaviour
     public override void OnTaken<T>(T t)
     {
         if (!(t is Transform)) return;
-        
+
         transform.LookAt((t as Transform));
         Fire();
     }
