@@ -48,6 +48,8 @@ public class StateAttack : PlayerState
             damagable = col.GetComponent<IDamagable>();
             damagable.TakeHit(Controller.AttackValue);
         }
+
+
     }
 
     public IEnumerator DelayRoutine(Action action)
